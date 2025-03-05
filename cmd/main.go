@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"os/signal"
@@ -19,6 +20,11 @@ import (
 
 func main() {
 	// Загружаем конфигурацию из переменных окружения
+
+	if err := godotenv.Load("local.env"); err != nil {
+		log.Fatal("Ошибка загрузки env файла:", err)
+	}
+
 	var cfg config.AppConfig
 	if err := envconfig.Process("", &cfg); err != nil {
 		log.Fatal(errors.Wrap(err, "failed to load configuration"))
